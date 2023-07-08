@@ -75,6 +75,20 @@ def get_settings_from_user(settings):
             settings[option] = user_password_length
 
 
+def ask_if_change_settings(settings):
+
+    while True:
+        user_answer = input('Do you want to change default settings? (enter: yes, y: yes, n: no)')
+        if user_answer in ['y', 'n', '']:
+            if user_answer in ['y', '']:
+                print('-' * 5, 'Change Settings', '-' *5, sep='')
+                get_settings_from_user(settings)
+            break
+        else:
+            print('Invalid input. (chose from: y: yes, n: no, enter: yes).')
+            print('Please try again.')
+
+
 def generate_random_char(choices):
     choice = random.choice(choices)
 
@@ -105,15 +119,40 @@ def password_generator(settings):
         final_password += generate_random_char(choices)
     return final_password
 
+def ask_to_generator_another_password():
+
+    while True:
+        user_answer = input('Regenerate? (y: yes, n: no), enter: yes: ')
+        if user_answer in ['y', 'n', '']:
+            if user_answer == 'n':
+                return False
+            return True
+        else:
+            print('Invalid input. (chose from: y: yes, n: no, enter: yes).')
+            print('Please try again.')
+
+
+def password_generator_loop(settings):
+    """
+        Show the password inside the loop
+    """
+    while True:
+        print('-' * 40)
+        print(f'Your Generator Password: {password_generator(settings)}')
+
+        if ask_to_generator_another_password() == False:
+            break
+
 
 def run():
     """
         This function is responsible for executing the entire program   
     """
     clear_screen()
-    get_settings_from_user(settings)
-    print('-' * 40)
-    print(f'Your Generator Password: {password_generator(settings)}')
+    ask_if_change_settings(settings)
+    password_generator_loop(settings)
+    print('Thank you for choosing us.')
+
 
 
 run()
