@@ -1,5 +1,6 @@
 import random
 import string
+import os
 
 
 settings = {
@@ -10,6 +11,13 @@ settings = {
     'space': False,
     'length': 8
 } # Initial settings
+
+
+def clear_screen():
+    """
+        To not print the basic information of the system
+    """
+    os.system('clear')
 
 
 def get_user_password_length(option, default, pw_min_length=4, pw_max_length=30):
@@ -63,8 +71,8 @@ def get_settings_from_user(settings):
             user_choice = get_yes_or_no_for_settings(option, default)
             settings[option] = user_choice
         else:
-            user_password_linght = get_user_password_length(option, default)
-            settings[option] = user_password_linght
+            user_password_length = get_user_password_length(option, default)
+            settings[option] = user_password_length
 
 
 def generate_random_char(choices):
@@ -97,6 +105,15 @@ def password_generator(settings):
         final_password += generate_random_char(choices)
     return final_password
 
-get_settings_from_user(settings)
-# print(settings)
-print(password_generator(settings))
+
+def run():
+    """
+        This function is responsible for executing the entire program   
+    """
+    clear_screen()
+    get_settings_from_user(settings)
+    print('-' * 40)
+    print(f'Your Generator Password: {password_generator(settings)}')
+
+
+run()
